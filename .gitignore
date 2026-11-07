@@ -1,1 +1,2 @@
-node_modules/
+# Ignorar dependencias de Node en cualquier subcarpeta
+**/node_modules
