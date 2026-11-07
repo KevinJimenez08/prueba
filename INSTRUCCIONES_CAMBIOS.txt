@@ -1,0 +1,64 @@
+CAMBIOS HOTEL LUNARIA
+=====================
+
+1. Navegación administrativa: el menú lateral queda fijo al hacer scroll.
+2. Filtros: búsqueda en usuarios (nombre/correo e inicial), habitaciones, servicios,
+   paquetes, clientes, huéspedes y reservas.
+3. Habitaciones: columnas compactas con desplazamiento horizontal dentro de la tabla.
+4. Recuperación de contraseña: endpoints /api/auth/recuperar y /api/auth/restablecer.
+   El código es aleatorio criptográfico de 6 dígitos, se guarda como SHA-256,
+   tiene índice UNIQUE y caduca en 2 minutos.
+5. Reservas: eliminación permitida únicamente cuando fechaFin ya terminó.
+6. Disponibilidad: el alta/edición administrativa comprueba solapamientos en la BD;
+   la ruta de cliente ya tenía su comprobación transaccional.
+7. Servicios de paquete: se conservan las relaciones de servicios incluidos;
+   la pantalla de reservas excluye los incluidos de la selección adicional y suma
+   el precio de los extras seleccionados.
+
+PASOS OBLIGATORIOS
+------------------
+A) En MySQL Workbench, selecciona la base lunaria y ejecuta:
+   backend/migracion_recuperacion_contrasenas.sql
+
+B) Configura en backend/.env:
+   SMTP_HOST=servidor-smtp
+   SMTP_PORT=587
+   SMTP_SECURE=false
+   SMTP_USER=correo-de-envio
+   SMTP_PASS=clave-o-token-smtp
+   SMTP_FROM=Hotel Lunaria <correo-de-envio>
+
+C) Reinicia backend y frontend:
+   backend: npm install && npm start
+   frontend: cd vite-project && npm install && npm run dev
+
+NOTAS
+-----
+- No se alteran ni eliminan los registros del dump.
+- El código de recuperación no se envía hasta configurar SMTP.
+- La validación de disponibilidad evita sobrepasar la cantidad de unidades
+  disponibles del tipo de habitación; no representa números de habitación físicos.
+- Se recomienda probar altas simultáneas y recuperación por correo en local.
+
+
+8. Inventario físico de 100 habitaciones:
+   Ejecuta también backend/migracion_habitaciones_fisicas.sql.
+   Crea/valida habitaciones_unidades y reservas_has_unidades sin borrar reservas.
+   El endpoint GET /api/habitaciones/unidades consulta número físico y estado;
+   GET /api/disponibilidad usa esas unidades para fechas.
+   Las reservas de clientes guardan las unidades físicas elegidas dentro de la
+   transacción. Las rutas administrativas aceptan habitacionesSeleccionadas:
+   [{ idHabitacionesFK, cantidadHabitaciones }], y asignan unidades físicas.
+   Una unidad no puede quedar asignada a reservas solapadas.
+
+
+9. Filtro por estado de habitaciones físicas:
+   En Gestión de Habitaciones, el inventario físico ahora se filtra por Todas,
+   Disponibles, Ocupadas y En mantenimiento, mostrando el conteo de cada estado.
+   Se eliminó el encabezado genérico de inventario de 100 habitaciones y se
+   sustituyó por filtros operativos. El estado Ocupada se calcula según las
+   reservas activas para hoy (o para las fechas llegada/salida enviadas).
+   Cada habitación física disponible permite cambiar entre Disponible y
+   Mantenimiento. El backend impide enviarla a mantenimiento si tiene una
+   reserva vigente o futura. No requiere una migración adicional: utiliza
+   habitaciones_unidades y reservas_has_unidades ya creadas.

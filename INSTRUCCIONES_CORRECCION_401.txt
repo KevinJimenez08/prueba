@@ -1,0 +1,12 @@
+CORRECCION DE ERRORES 401 EN EL PANEL ADMINISTRATIVO
+
+Se ajustó la lectura del token en el frontend. Antes varias pantallas leían únicamente localStorage.lunariaToken; las sesiones antiguas podían tener el token dentro de lunariaSesion pero no en esa clave separada. Ahora se recupera de ambos lugares y el interceptor lo adjunta a las solicitudes.
+
+PASOS:
+1. Reemplaza tu proyecto por esta versión o copia los archivos modificados de vite-project/src.
+2. Detén y vuelve a iniciar backend y frontend.
+3. Cierra sesión desde la aplicación y vuelve a iniciar sesión. Esto genera un JWT nuevo.
+4. Si persiste el 401, abre DevTools > Network > una solicitud /api/usuarios > Request Headers y confirma que exista Authorization: Bearer <token>. No compartas el valor del token.
+5. Si Authorization sí aparece y sigue respondiendo 401, revisa que backend/.env mantenga el mismo JWT_SECRET con el que se generó el token y que no haya dos servidores backend ejecutándose en el puerto 3000. Reinicia el backend después de cualquier cambio.
+
+Los mensajes de imágenes cargadas lazy/placeholder no son la causa de los 401.

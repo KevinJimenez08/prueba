@@ -1,0 +1,16 @@
+CAMBIOS DE INVENTARIO Y RESERVAS FISICAS
+
+1. El módulo Gestión de Habitaciones muestra cuatro tarjetas de resumen: total, ocupadas, disponibles y mantenimiento.
+2. La búsqueda permite localizar por número de habitación, ID físico, tipo y huésped actual.
+3. Los filtros permiten ver todas, disponibles, ocupadas o en mantenimiento.
+4. Los contadores y estados se alimentan del endpoint GET /api/habitaciones/unidades.
+5. El endpoint añade el huésped de la reserva vigente para facilitar la búsqueda.
+6. GET /api/reservas devuelve habitacionesFisicas con idUnidad y numeroHabitacion para cada unidad asignada.
+7. El listado de reservas muestra ambos datos: ID físico y número visible de habitación. Las reservas históricas sin relación de unidad se identifican como "Sin asignación física registrada".
+
+No se añadió una columna nueva a reservas ni se modificaron las relaciones existentes. Se reutiliza reservas_has_unidades para mantener una relación de una reserva con varias habitaciones físicas.
+
+VERIFICACIONES:
+- server.js supera node --check.
+- GestionHabitaciones.jsx y GestionReservas.jsx superan el análisis sintáctico JSX con TypeScript transpileModule.
+- No se pudo ejecutar npm run build en este entorno porque npm ci excedió el tiempo disponible para instalar dependencias.
