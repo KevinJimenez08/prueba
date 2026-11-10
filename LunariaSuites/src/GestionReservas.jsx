@@ -45,11 +45,11 @@ export default function GestionReservas() {
   const cargarDatos = useCallback(async () => {
     try {
       const [resRes, resPaq, resServ, resHab, resCli] = await Promise.all([
-        fetch('http://localhost:3000/api/reservas', { headers: authHeaders() }),
-        fetch('http://localhost:3000/api/paquetes', { headers: authHeaders() }),
-        fetch('http://localhost:3000/api/servicios', { headers: authHeaders() }),
-        fetch('http://localhost:3000/api/habitaciones', { headers: authHeaders() }),
-        fetch('http://localhost:3000/api/clientes', { headers: authHeaders() })
+        fetch('https://hotel-lunaria-backend-prueba.onrender.com/api/reservas', { headers: authHeaders() }),
+        fetch('https://hotel-lunaria-backend-prueba.onrender.com/api/paquetes', { headers: authHeaders() }),
+        fetch('https://hotel-lunaria-backend-prueba.onrender.com/api/servicios', { headers: authHeaders() }),
+        fetch('https://hotel-lunaria-backend-prueba.onrender.com/api/habitaciones', { headers: authHeaders() }),
+        fetch('https://hotel-lunaria-backend-prueba.onrender.com/api/clientes', { headers: authHeaders() })
       ]);
 
       if (resRes.ok) setReservas(await resRes.json());
@@ -241,7 +241,7 @@ export default function GestionReservas() {
           .filter((id) => !esServicioIncluidoEnPaquete(id, nuevaReserva.idPaquetesFK))
       };
 
-      const res = await fetch('http://localhost:3000/api/reservas', {
+      const res = await fetch('https://hotel-lunaria-backend-prueba.onrender.com/api/reservas', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify(payload)
@@ -290,7 +290,7 @@ export default function GestionReservas() {
           .filter((id) => !esServicioIncluidoEnPaquete(id, reservaEditando.idPaquetesFK))
       };
 
-      const res = await fetch(`http://localhost:3000/api/reservas/${reservaEditando.idReservas}`, {
+      const res = await fetch(`https://hotel-lunaria-backend-prueba.onrender.com/api/reservas/${reservaEditando.idReservas}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify(payload)
@@ -312,7 +312,7 @@ export default function GestionReservas() {
   // Eliminar reserva
   const ejecutarEliminacion = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/reservas/${confirmarEliminarId}`, { method: 'DELETE', headers: authHeaders() });
+      const res = await fetch(`https://hotel-lunaria-backend-prueba.onrender.com/api/reservas/${confirmarEliminarId}`, { method: 'DELETE', headers: authHeaders() });
 
       if (res.ok) {
         setConfirmarEliminarId(null);

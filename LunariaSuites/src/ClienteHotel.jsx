@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowRight, BedDouble, CalendarDays, Check, Menu, Sparkles, Waves, X, UserRound, LogOut, LayoutDashboard, ChevronDown, Search, LoaderCircle } from 'lucide-react';
 import './ClienteHotel.css';
 
-const API = 'http://localhost:3000/api';
+const API = 'https://hotel-lunaria-backend-prueba.onrender.com/api';
 const COP = (n) => Number(n || 0).toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 });
 // Una ruta vacía/null significa que el registro no tiene fotografía. No se asignan imágenes de respaldo.
 const imagePath = (value) => {

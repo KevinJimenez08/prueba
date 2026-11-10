@@ -36,7 +36,7 @@ export default function GestionPaquetes() {
 
   const obtenerPaquetes = useCallback(async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/paquetes', { headers: authHeaders() });
+      const res = await fetch('https://hotel-lunaria-backend-prueba.onrender.com/api/paquetes', { headers: authHeaders() });
       if (!res.ok) throw new Error('Error al obtener paquetes');
       const data = await res.json();
       setPaquetes(data);
@@ -50,8 +50,8 @@ export default function GestionPaquetes() {
     const cargarCatalogos = async () => {
       try {
         const [rh, rs] = await Promise.all([
-          fetch('http://localhost:3000/api/habitaciones', { headers: authHeaders() }),
-          fetch('http://localhost:3000/api/servicios', { headers: authHeaders() })
+          fetch('https://hotel-lunaria-backend-prueba.onrender.com/api/habitaciones', { headers: authHeaders() }),
+          fetch('https://hotel-lunaria-backend-prueba.onrender.com/api/servicios', { headers: authHeaders() })
         ]);
         if (rh.ok) setHabitaciones((await rh.json()).filter(h => Number(h.estado) === 1 || h.estado == null));
         if (rs.ok) setServicios((await rs.json()).filter(s => Number(s.estado) === 1 || s.estado == null));
@@ -63,7 +63,7 @@ export default function GestionPaquetes() {
   const handleGuardarNuevo = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:3000/api/paquetes', {
+      const res = await fetch('https://hotel-lunaria-backend-prueba.onrender.com/api/paquetes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify({
@@ -91,7 +91,7 @@ export default function GestionPaquetes() {
   const handleGuardarEdicion = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:3000/api/paquetes/${paqueteEditando.idPaquetes}`, {
+      const res = await fetch(`https://hotel-lunaria-backend-prueba.onrender.com/api/paquetes/${paqueteEditando.idPaquetes}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', ...authHeaders() },
         body: JSON.stringify({
@@ -117,7 +117,7 @@ export default function GestionPaquetes() {
 
   const ejecutarEliminacion = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/paquetes/${confirmarEliminarId}`, { method: 'DELETE', headers: authHeaders() });
+      const res = await fetch(`https://hotel-lunaria-backend-prueba.onrender.com/api/paquetes/${confirmarEliminarId}`, { method: 'DELETE', headers: authHeaders() });
 
       if (res.ok) {
         setConfirmarEliminarId(null);

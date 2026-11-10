@@ -88,7 +88,7 @@ export default function GestionRoles({ sesion, onCerrarSesion, onVerPaginaPublic
 
   const obtenerRoles = useCallback(async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/roles', { headers: { Authorization: `Bearer ${sesion?.token || localStorage.getItem('lunariaToken') || ''}` } });
+      const res = await fetch('https://hotel-lunaria-backend-prueba.onrender.com/api/roles', { headers: { Authorization: `Bearer ${sesion?.token || localStorage.getItem('lunariaToken') || ''}` } });
       if (!res.ok) throw new Error('Error en la respuesta del servidor');
       const data = await res.json();
       setRoles(data);
@@ -116,7 +116,7 @@ export default function GestionRoles({ sesion, onCerrarSesion, onVerPaginaPublic
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/roles', {
+      const res = await fetch('hhttps://hotel-lunaria-backend-prueba.onrender.com/api/roles', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sesion?.token || localStorage.getItem('lunariaToken') || ''}` },
         body: JSON.stringify(nuevoRol)
@@ -145,7 +145,7 @@ export default function GestionRoles({ sesion, onCerrarSesion, onVerPaginaPublic
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/api/roles/${rolEditando.id}`, {
+      const res = await fetch(`https://hotel-lunaria-backend-prueba.onrender.com/api/roles/${rolEditando.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${sesion?.token || localStorage.getItem('lunariaToken') || ''}` },
         body: JSON.stringify(rolEditando)
@@ -166,7 +166,7 @@ export default function GestionRoles({ sesion, onCerrarSesion, onVerPaginaPublic
 
   const ejecutarEliminacion = async () => {
     try {
-      const res = await fetch(`http://localhost:3000/api/roles/${confirmarEliminarId}`, {
+      const res = await fetch(`https://hotel-lunaria-backend-prueba.onrender.com/api/roles/${confirmarEliminarId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${sesion?.token || localStorage.getItem('lunariaToken') || ''}` }
       });
